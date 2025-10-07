@@ -1,0 +1,274 @@
+/* Dashboard navigation at bottom left */
+
+/* Professional dashboard sidebar */
+#dashboardSidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 300px;
+    background: linear-gradient(160deg, #2d6a4f 80%, #40916c 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.12);
+    z-index: 200;
+}
+#dashboardSidebar .sidebar-logo {
+    display: block;
+    margin: 0 auto 0 auto;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    background: #fff;
+    object-fit: cover;
+    margin-bottom: 0.5em;
+}
+#dashboardSidebar .sidebar-header {
+    padding: 36px 24px 18px 24px;
+    border-bottom: 1px solid #40916c;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#dashboardSidebar .sidebar-header .user-role {
+    font-size: 0.95em;
+    color: #b7e4c7;
+    margin-top: 2px;
+}
+#dashboardSidebar .sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 32px;
+}
+#dashboardSidebar .sidebar-nav button {
+    background: none;
+    color: #fff;
+    border: none;
+    padding: 22px 40px 22px 36px;
+    font-size: 1.25em;
+    text-align: left;
+    cursor: pointer;
+    border-left: 5px solid transparent;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    letter-spacing: 0.5px;
+}
+#dashboardSidebar .sidebar-nav button.active,
+#dashboardSidebar .sidebar-nav button:hover {
+    background: #40916c;
+    border-left: 5px solid #b7e4c7;
+    color: #e9ecef;
+}
+#dashboardSidebar .sidebar-footer {
+    padding: 22px 24px;
+    border-top: 1px solid #40916c;
+    font-size: 1em;
+    color: #b7e4c7;
+    background: rgba(0,0,0,0.04);
+}
+
+#dashboardMain {
+    margin-left: 300px;
+    padding: 24px 32px;
+    background: #f8fafc;
+    display: block;
+    box-shadow: none;
+}
+#dashboardMain h2 { margin: 0 0 8px; }
+/* DigiLocker-style cards and tables */
+.dl-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    align-items: start;
+}
+.dl-card {
+    background: #ffffff;
+    border: 1px solid #e6eef3;
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.dl-card h3 {
+    margin: 0 0 12px;
+    color: #2d6a4f;
+}
+.dl-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #e6eef3;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.dl-table thead tr { background: #f1f5f9; }
+.dl-table th, .dl-table td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid #e6eef3;
+}
+.dl-table tr:last-child td { border-bottom: none; }
+/* Center the Welcome block on dashboard */
+.home-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+/* Style for password input wrapper and toggle button */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Match password input width to username input */
+#loginForm input[type="text"],
+#loginForm .password-wrapper,
+#registerForm input[type="text"],
+#registerForm .password-wrapper {
+    max-width: 400px;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+.password-wrapper input[type="password"],
+.password-wrapper input[type="text"] {
+    width: 100%;
+    padding-right: 38px;
+    box-sizing: border-box;
+}
+.password-toggle-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    padding: 0 4px;
+    color: #2d6a4f;
+    height: 28px;
+    display: flex;
+    align-items: center;
+}
+#siteLogo {
+    margin-bottom: 10px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+#registerForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-top: 20px;
+}
+#registerForm label {
+    width: 100%;
+    max-width: 300px;
+    text-align: left;
+    margin-top: 18px;
+    margin-bottom: 4px;
+    font-weight: bold;
+    align-self: flex-start;
+}
+#registerForm select, #registerForm input[type="text"], #registerForm input[type="password"], #registerForm input[type="number"], #registerForm input[type="tel"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    border: 1px solid #b7e4c7;
+    border-radius: 6px;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+}
+#registerForm button {
+    margin-top: 28px;
+    width: 100%;
+    max-width: 400px;
+    text-align: left;
+    font-size: 1.1em;
+    padding: 14px;
+}
+/* Center the Create New Account button */
+#showRegisterBtn {
+    display: block;
+    margin: 0 0 28px 0;
+    width: fit-content;
+    text-align: left;
+    font-size: 1.1em;
+    padding: 10px 24px;
+}
+body {
+    background: #f0f4f8;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    background: #fff;
+    max-width: 600px;
+    margin: 80px auto;
+    padding: 48px 64px;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    text-align: left;
+}
+h2, h3 {
+    text-align: center;
+    color: #2d6a4f;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+label {
+    font-weight: bold;
+    color: #333;
+}
+input[type="text"], input[type="password"] {
+    padding: 8px;
+    border: 1px solid #b7e4c7;
+    border-radius: 5px;
+    font-size: 1em;
+}
+button {
+    background: #2d6a4f;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+button:hover {
+    background: #40916c;
+}
+p {
+    text-align: center;
+    color: #d90429;
+    min-height: 20px;
+}
+hr {
+    margin: 30px 0;
+    border: none;
+    border-top: 1px solid #b7e4c7;
+}
