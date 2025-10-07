@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digi Sahayak</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../logo.png">
+    <style>
+        #dashboardSidebar { position: fixed; top: 0; left: 0; height: 100vh; width: 300px; background: linear-gradient(160deg, #2d6a4f 80%, #40916c 100%); color: #fff; display: flex; flex-direction: column; align-items: stretch; box-shadow: 4px 0 24px rgba(0,0,0,0.12); z-index: 200; }
+        #dashboardSidebar .sidebar-logo { display: block; margin: 0 auto 0 auto; width: 80px; height: 80px; border-radius: 50%; box-shadow: 0 2px 12px rgba(0,0,0,0.10); background: #fff; object-fit: cover; margin-bottom: 0.5em; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        #dashboardSidebar .sidebar-logo:hover { transform: scale(1.05); box-shadow: 0 4px 16px rgba(0,0,0,0.20); }
+        #dashboardSidebar .sidebar-header { padding: 36px 24px 18px 24px; border-bottom: 1px solid #40916c; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        #dashboardSidebar .sidebar-nav { flex: 1; display: flex; flex-direction: column; gap: 0; margin-top: 32px; }
+        #dashboardSidebar .sidebar-nav button { background: none; color: #fff; border: none; padding: 22px 40px 22px 36px; font-size: 1.25em; text-align: left; cursor: pointer; border-left: 5px solid transparent; transition: background 0.18s, border-color 0.18s, color 0.18s; display: flex; align-items: center; gap: 18px; letter-spacing: 0.5px; }
+        #dashboardSidebar .sidebar-nav button.active, #dashboardSidebar .sidebar-nav button:hover { background: #40916c; border-left: 5px solid #b7e4c7; color: #e9ecef; }
+        #dashboardSidebar .sidebar-footer { padding: 22px 24px; border-top: 1px solid #40916c; font-size: 1em; color: #b7e4c7; background: rgba(0,0,0,0.04); }
+    #dashboardMain { margin-left: 300px; padding: 24px 32px; background: #f8fafc; display: block; box-shadow: none; }
+    #dashboardMain h2 { margin: 0 0 8px; }
+    
+    /* Photo upload styling */
+    #newPhoto {
+        background: white;
+        border: 2px dashed #2d6a4f;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+    #newPhoto:hover {
+        border-color: #40916c;
+        background: #f8f9fa;
+    }
+    
+    /* Language toggle button styling */
+    #languageToggle {
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #languageToggle:hover {
+        background: #40916c !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    
+    /* Top-right profile photo styling */
+    #topRightProfilePhoto {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    #topRightProfilePhoto:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <div style="text-align:center; margin-bottom: 24px; position: relative;">
+            <div style="position: absolute; top: 0; right: 0; display: flex; align-items: center; gap: 10px;">
+                <img id="topRightProfilePhoto" src="../logo.png" alt="Profile Photo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #2d6a4f; cursor: pointer; display: none;" title="Click to update photo">
+                <button id="languageToggle" style="background: #2d6a4f; color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; font-size: 14px; font-weight: bold;">
+                    🌐 हिंदी
+                </button>
+            </div>
+            <img src="../logo.png" alt="Website Logo" id="siteLogo" style="max-width:120px; width:100%; height:auto; display:inline-block;" />
+        </div>
+        <div id="profileSection" style="display:none;">
+            <div id="dashboardNav" style="display:none;"></div>
+            <div id="dashboardMain" style="display:none;"></div>
+            <div id="adminPanel" style="display:none; margin-top:30px;">
+                <h3 data-lang-en="Owner Control Panel" data-lang-hi="मालिक नियंत्रण पैनल">Owner Control Panel</h3>
+                <div style="margin-bottom:10px;">
+                    <label for="accountTypeFilter"><strong data-lang-en="View accounts by type:" data-lang-hi="प्रकार के अनुसार खाते देखें:">View accounts by type:</strong></label>
+                    <select id="accountTypeFilter">
+                        <option value="all" data-lang-en="All" data-lang-hi="सभी">All</option>
+                        <option value="hospital" data-lang-en="Hospital" data-lang-hi="अस्पताल">Hospital</option>
+                        <option value="doctor" data-lang-en="Doctor" data-lang-hi="डॉक्टर">Doctor</option>
+                        <option value="healthcenter" data-lang-en="Health Center" data-lang-hi="स्वास्थ्य केंद्र">Health Center</option>
+                        <option value="patient" data-lang-en="Patient" data-lang-hi="मरीज़">Patient</option>
+                    </select>
+                    <button id="viewAllAccountsBtn" data-lang-en="View Accounts" data-lang-hi="खाते देखें">View Accounts</button>
+                </div>
+                <div id="allAccountsData" style="margin-top:20px; display:none;"></div>
+            </div>
+            <div id="profileDetails" style="display:block;">
+                <h2 data-lang-en="Profile" data-lang-hi="प्रोफ़ाइल">Profile</h2>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="position: relative; display: inline-block;">
+                        <img id="profilePhoto" src="../logo.png" alt="Profile Photo" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #2d6a4f; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <button id="updatePhotoBtn" style="position: absolute; bottom: 0; right: 0; background: #2d6a4f; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 14px;">📷</button>
+                    </div>
+                    <input type="file" id="updatePhoto" accept="image/*" style="display: none;">
+                </div>
+                <p><strong data-lang-en="Username:" data-lang-hi="उपयोगकर्ता नाम:">Username:</strong> <span id="profileUsername"></span></p>
+                <p><strong data-lang-en="Role:" data-lang-hi="भूमिका:">Role:</strong> <span id="profileRole"></span></p>
+                <p><strong data-lang-en="Name:" data-lang-hi="नाम:">Name:</strong> <span id="profileName"></span></p>
+                <p><strong data-lang-en="Gender:" data-lang-hi="लिंग:">Gender:</strong> <span id="profileGender"></span></p>
+                <p><strong data-lang-en="Age:" data-lang-hi="आयु:">Age:</strong> <span id="profileAge"></span></p>
+                <p><strong data-lang-en="Mobile Number:" data-lang-hi="मोबाइल नंबर:">Mobile Number:</strong> <span id="profileMobile"></span></p>
+                <button id="logoutBtn" data-lang-en="Logout" data-lang-hi="लॉगआउट">Logout</button>
+            </div>
+        </div>
+        <div id="authSection">
+            <h2 data-lang-en="Login to Digi Sahayak" data-lang-hi="डिजी सहायक में लॉगिन करें">Login to Digi Sahayak</h2>
+            <form id="loginForm">
+                <label for="username" data-lang-en="Username" data-lang-hi="उपयोगकर्ता नाम">Username</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password" data-lang-en="Password" data-lang-hi="पासवर्ड">Password</label>
+                <div style="position:relative; width:100%; max-width:250px; margin:0 auto;">
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" required>
+                        <button type="button" id="toggleLoginPassword" class="password-toggle-btn">👁️</button>
+                    </div>
+                </div>
+                <button type="submit" data-lang-en="Login" data-lang-hi="लॉगिन">Login</button>
+            </form>
+            <p id="loginMessage"></p>
+            <hr>
+            <button id="showRegisterBtn" type="button" data-lang-en="Create New Account" data-lang-hi="नया खाता बनाएं">Create New Account</button>
+            <form id="registerForm" style="display:none; margin-top: 20px;">
+                <label for="newRole" data-lang-en="What is your identity?" data-lang-hi="आपकी पहचान क्या है?">What is your identity?</label>
+                <select id="newRole" name="newRole" required>
+                    <option value="" data-lang-en="Select Identity" data-lang-hi="पहचान चुनें">Select Identity</option>
+                    <option value="doctor" data-lang-en="Doctor" data-lang-hi="डॉक्टर">Doctor</option>
+                    <option value="hospital" data-lang-en="Hospital" data-lang-hi="अस्पताल">Hospital</option>
+                    <option value="healthcenter" data-lang-en="Health Center" data-lang-hi="स्वास्थ्य केंद्र">Health Center</option>
+                    <option value="patient" data-lang-en="Patient" data-lang-hi="मरीज़">Patient</option>
+                </select>
+                <label for="newUsername" data-lang-en="Username" data-lang-hi="उपयोगकर्ता नाम">Username</label>
+                <input type="text" id="newUsername" name="newUsername" required>
+                <label for="newPassword" data-lang-en="Password" data-lang-hi="पासवर्ड">Password</label>
+                <div style="position:relative; width:100%; max-width:300px; margin:0 auto;">
+                    <div class="password-wrapper">
+                        <input type="password" id="newPassword" name="newPassword" required>
+                        <button type="button" id="toggleRegisterPassword" class="password-toggle-btn">👁️</button>
+                    </div>
+                </div>
+                <label for="newName" data-lang-en="Name" data-lang-hi="नाम">Name</label>
+                <input type="text" id="newName" name="newName" required>
+                <label for="newGender" data-lang-en="Gender" data-lang-hi="लिंग">Gender</label>
+                <select id="newGender" name="newGender" required>
+                    <option value="" data-lang-en="Select Gender" data-lang-hi="लिंग चुनें">Select Gender</option>
+                    <option value="Male" data-lang-en="Male" data-lang-hi="पुरुष">Male</option>
+                    <option value="Female" data-lang-en="Female" data-lang-hi="महिला">Female</option>
+                    <option value="Other" data-lang-en="Other" data-lang-hi="अन्य">Other</option>
+                </select>
+                <label for="newAge" data-lang-en="Age" data-lang-hi="आयु">Age</label>
+                <input type="number" id="newAge" name="newAge" min="0" required>
+                <label for="newMobile" data-lang-en="Mobile Number" data-lang-hi="मोबाइल नंबर">Mobile Number</label>
+                <input type="tel" id="newMobile" name="newMobile" pattern="[0-9]{10}" required>
+                <label for="newPhoto" data-lang-en="Profile Photo (Optional)" data-lang-hi="प्रोफ़ाइल फ़ोटो (वैकल्पिक)">Profile Photo (Optional)</label>
+                <input type="file" id="newPhoto" name="newPhoto" accept="image/*">
+                <button type="submit" data-lang-en="Create Account" data-lang-hi="खाता बनाएं">Create Account</button>
+            </form>
+            <p id="registerMessage"></p>
+        </div>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>
